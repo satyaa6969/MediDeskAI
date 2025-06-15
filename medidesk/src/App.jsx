@@ -9,7 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
     const location = useLocation();
-    // Don't show the standard footer on the dashboard page
+  
     const showFooter = location.pathname !== '/dashboard';
 
     return (
