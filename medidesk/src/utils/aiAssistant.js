@@ -1,12 +1,18 @@
-// src/utils/aiAssistant.js
-
+/**
+ * Calls our LIVE Python backend on Render to generate a prescription.
+ *
+ * @param {string} diagnosis The patient's diagnosis.
+ * @param {object} patient The full patient object for context.
+ * @returns {Promise<object>} A promise that resolves to the prescription object.
+ */
 export const generateAIPrescription = async (diagnosis, patient) => {
-    // THIS IS THE INTEGRATION. It's the full address of your Python server's API endpoint.
-    const BACKEND_URL = 'http://localhost:5000/api/generate-prescription';
+    // --- THIS IS THE CRITICAL CHANGE ---
+    // Replace the old localhost URL with your live Render URL
+    const BACKEND_URL = 'https://medi-desk-ai-backend.onrender.com/api/generate-prescription';
 
     try {
-        // Your React app sends a POST request with the patient's data...
         const response = await fetch(BACKEND_URL, {
+            // ... the rest of the function stays the same
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -14,10 +20,10 @@ export const generateAIPrescription = async (diagnosis, patient) => {
             body: JSON.stringify({ diagnosis, patient }),
         });
 
-        // ...and then it waits for the backend to send back the AI's response.
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+
         const prescriptionData = await response.json();
         return prescriptionData;
 
