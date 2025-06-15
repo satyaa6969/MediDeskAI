@@ -1,12 +1,17 @@
-# React + Vite
+# MediDesk AI 🩺✨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack, AI-powered medical dashboard designed to streamline clinic workflows. This application enables doctors to manage patientYou records securely and leverage a powerful AI assistant to generate context-aware prescriptions, which can be downloaded as professional PDF documents.
 
-Currently, two official plugins are available:
+### [View the Live Demo Here](https://medideskai.onrender.com/)
+*(Note: The free tier on Render may cause the first load to be slow. Please be patient!)*
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Key Features
+
+*   **Secure Doctor Authentication:** A complete user system where doctors can sign up and log in to a secure dashboard. The application uses client-side persistence (`localStorage`) to manage user sessions.
+
+*   **Full Patient CRUD Functionality:**
+    *   **Create:** Add new patients with detailed information, including primary diagnosis, reported be professional, detailed, and ready to be the front page of your GitHub repository.
+
