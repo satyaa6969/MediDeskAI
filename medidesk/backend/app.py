@@ -50,9 +50,8 @@ def generate_prescription_route():
     - If there is no history, provide a standard, first-line treatment for the primary diagnosis.
     - **CRITICAL:** Always respect the 'Known Allergies'.
     - If there is no primary diagnosis or the primary diagnosis is not a real disease then generate an error or leave a blank prescription
-    - If an illness needs more than 1 medicine, specify the name and dosage of all the required medicines.
-
-    Respond ONLY with a JSON object in the following format, with no other text, comments, or explanations, use multiple tables if required:
+    
+    Respond ONLY with a JSON object in the following format, with no other text, comments, or explanations:
     {{
       "medication": "string",
       "dosage": "string",
