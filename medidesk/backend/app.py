@@ -19,9 +19,7 @@ def generate_prescription_route():
     if not patient or not patient.get('diagnosis'):
         return jsonify({"error": "Diagnosis and patient data are required"}), 400
 
-    # --- START OF THE UPGRADE ---
-
-    # 1. Format the medical history into a clean, readable string for the AI.
+   
     history_records = patient.get('history', [])
     if history_records:
         # We'll format it like a list. The `\n- ` creates a new bullet point on a new line.
@@ -30,7 +28,7 @@ def generate_prescription_route():
     else:
         history_summary = "No previous medical history provided for this condition."
 
-    # 2. Create the new, more sophisticated prompt.
+  
     prompt = f"""
     You are an expert medical AI assistant. Your task is to act as a consultant and suggest the next course of action by generating a prescription based on a patient's complete record.
 
@@ -52,8 +50,9 @@ def generate_prescription_route():
     - If there is no history, provide a standard, first-line treatment for the primary diagnosis.
     - **CRITICAL:** Always respect the 'Known Allergies'.
     - If there is no primary diagnosis or the primary diagnosis is not a real disease then generate an error or leave a blank prescription
+    - If an illness needs more than 1 medicine, specify the name and dosage of all the required medicines.
 
-    Respond ONLY with a JSON object in the following format, with no other text, comments, or explanations:
+    Respond ONLY with a JSON object in the following format, with no other text, comments, or explanations, use multiple tables if required:
     {{
       "medication": "string",
       "dosage": "string",
@@ -61,7 +60,7 @@ def generate_prescription_route():
     }}
     """
 
-    # --- END OF THE UPGRADE ---
+   
 
     try:
         # The rest of the function remains exactly the same.
