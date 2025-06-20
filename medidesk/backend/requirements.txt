@@ -4,4 +4,4 @@ openai
 flask-cors
 groq
 gunicorn
-pip freeze > requirements.txt
+requests
