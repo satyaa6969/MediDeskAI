@@ -13,9 +13,10 @@ const DashboardPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isGenerating, setIsGenerating] = useState(false); // For the AI button
+    const [mcpData, setMcpData] = useState(null);
+    const [isMcpLoading, setIsMcpLoading] = useState(false);
 
-    // --- EFFECTS ---
-    // Load user data on initial component mount
+    
     useEffect(() => {
         try {
             const loggedInUserSession = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -36,6 +37,36 @@ const DashboardPage = () => {
         } catch (error) { console.error("Failed to load user data", error); }
         finally { setIsLoading(false); }
     }, []);
+    useEffect(() => {
+        // Don't fetch if no patient is selected
+        if (!selectedPatient) {
+            setMcpData(null);
+            return;
+        }
+
+        const fetchMcpData = async () => {
+            setIsMcpLoading(true);
+            setMcpData(null); // Clear previous patient's data
+
+            try {
+                // Fetch from our new mock backend endpoint
+                const response = await fetch(`http://localhost:5000/api/mcp/patient/${selectedPatient.id}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const data = await response.json();
+                setMcpData(data);
+
+            } catch (error) {
+                console.error("Failed to fetch MCP data:", error);
+                // Optionally, set an error state here to show in the UI
+            } finally {
+                setIsMcpLoading(false);
+            }
+        };
+
+        fetchMcpData();
+
+    }, [selectedPatient]);
 
     // --- HANDLER FUNCTIONS ---
 
@@ -125,6 +156,8 @@ const DashboardPage = () => {
                     </h1>
                     <PatientDetailViewer
                         patient={selectedPatient}
+                        mcpData={mcpData}
+                        isMcpLoading={isMcpLoading}
                         isGenerating={isGenerating}
                         onRemovePatient={handleRemovePatient}
                         onAddHistory={handleUpdatePatientHistory}
