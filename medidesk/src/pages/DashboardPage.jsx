@@ -60,14 +60,25 @@ const DashboardPage = () => {
         setPatients(prev => { const updated = [...prev, newPatient]; updatePatientDatabase(updated); setSelectedPatient(newPatient); return updated; });
     };
     const handleRemovePatient = (patientId) => {
-        if (window.confirm("Are you sure?")) {
-            setPatients(prev => {
-                const updated = prev.filter(p => p.id !== patientId);
-                updatePatientDatabase(updated);
-                if (selectedPatient && selectedPatient.id === patientId) { setSelectedPatient(updated[0] || null); }
-                return updated;
-            });
-        }
+        const updatedPatients = patients.map(patient => {
+            if (patient.id === patientId) {
+                // Found the right patient. Filter out the history record.
+                const updatedHistory = patient.history.filter(record => record.id !== historyId);
+                return { ...patient, history: updatedHistory };
+            }
+            
+            return patient;
+        });
+
+        
+        updatePatientDatabase(updatedPatients);
+
+       
+        setPatients(updatedPatients);
+
+        
+        const updatedSelectedPatient = updatedPatients.find(p => p.id === patientId);
+        setSelectedPatient(updatedSelectedPatient);
     };
     const handleUpdatePatientHistory = (patientId, newHistoryEntry) => {
         setPatients(prev => {
